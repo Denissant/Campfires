@@ -1,0 +1,505 @@
+html, body {
+    margin:0;
+    padding:0;
+    height:100%;
+    background-color: #fffafa;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+.c-1 {width: 8.33%;}
+.c-2 {width: 16.66%;}
+.c-3 {width: 25%;}
+.c-4 {width: 33.33%;}
+.c-5 {width: 41.66%;}
+.c-6 {width: 50%;}
+.c-7 {width: 58.33%;}
+.c-8 {width: 66.66%;}
+.c-9 {width: 75%;}
+.c-10 {width: 83.33%;}
+.c-11 {width: 91.66%;}
+.c-12 {width: 100%;}
+
+
+::selection {
+    background-color: rgba(245, 132, 132, 0.53);
+}
+
+li {
+    list-style:none;
+}
+
+.navbar {
+    background-color: #00D4B1!important;
+}
+
+.nav-top {
+    padding: 0.5rem 1rem;
+}
+
+
+
+#container {
+    min-height:100%;
+    position:relative;
+}
+
+#body {
+    padding:10px 0 60px 0;
+}
+
+#footer {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:60px;
+    background: rgba(0, 0, 0, 0.04);
+}
+
+
+#myTab {
+    padding: 7% 0 0 39%;
+    font-size: 25px;
+    font-family: "BPG Nino Elite Exp Caps", sans-serif
+}
+
+#placeholder {
+    text-align: center;
+    padding: 7% 15% 0 15%;
+}
+
+
+[role=alert] {
+    margin-top: 4%;
+    text-align: center;
+}
+
+#logoff {
+    float: right;
+    padding: 10px 25px 10px 25px;
+    margin: 30px;
+    font-weight: bold;
+    color: purple;
+    font-family: "BPG Nino Elite Exp Caps", sans-serif;
+    border-radius: 40px;
+    background-color: white;
+    box-shadow: 2px 2px 13px 3px #f3a8a8;
+    /*border: 3px #ff5050 solid;*/
+    font-size: 20px;
+    user-select: none;
+}
+
+#logoff:hover {
+    box-shadow: inset 2px 2px 13px #f3a8a8;
+    text-decoration: none;
+}
+
+#logoff:active {
+    background-color: #ba4b4b;
+    box-shadow: inset 2px 2px 13px #8e3434;
+    color: white;
+}
+
+#navbar {
+    padding-left: 15px;
+    font-size: 26px;
+    font-family: "BPG Nino Elite Exp Caps", sans-serif;
+}
+
+#navbar a:first-child {
+    border-bottom-left-radius: 15px;
+}
+
+#navbar a:last-child {
+    border-bottom-right-radius: 15px;
+}
+
+#navbar .active {
+    background-color: #ff5050;
+    box-shadow: inset 1px 2px 6px rgba(2, 12, 47, 0.27);
+    color: white
+}
+
+#navbar .nav-passive:hover {
+    box-shadow: inset 1px 2px 6px rgba(2, 12, 47, 0.27);
+}
+#navbar .nav-passive {
+    background-color: white;
+    border: none;
+    box-shadow: 1px 2px 6px rgba(2, 12, 47, 0.27);
+    color: #C70101;
+}
+
+#login-tab, #register-tab {
+    background-color: white;
+    color: red;
+    border-radius: 10px;
+    margin-right: 6px;
+    box-shadow: 1px 2px 6px rgba(2, 12, 47, 0.27);
+}
+
+#login-tab:hover, #register-tab:hover {
+    box-shadow: inset 2px 1px 5px rgba(2, 12, 47, 0.27);
+}
+
+.nav-tabs .active {
+    box-shadow: inset 1px 2px 6px rgba(2, 12, 47, 0.27)!important;
+    color: purple!important;
+}
+
+
+
+
+
+
+
+
+/**/
+/**/
+/**/
+/**/
+/**/
+.profile-list-all {
+    margin-left: 15%;
+    margin-right: 10%;
+    margin-top: 5%;
+    flex-direction: row;
+}
+
+.profile-list-one {
+    display: inline-block;
+    left: 10%;
+    margin-left: 5%;
+    margin-bottom: 5%;
+    width: 40%;
+    height: 5%;
+    background-color: white;
+    border-radius: 60px;
+    padding: 1%;
+    box-shadow: -2px 0 12px rgba(2, 12, 47, 0.35);
+}
+
+.profile-list-one:hover {
+    box-shadow: inset 2px 2px 10px rgba(2, 12, 47, 0.27);
+}
+
+
+.profile-list-one a {
+    text-decoration: none;
+}
+
+.profile-list-name {
+    font-family: "Open Sans Mixed", "BPG Nino Elite", sans-serif;
+    font-size: 26px;
+    color: #000000;
+    overflow: hidden;
+    margin-top: 2.3%;
+    margin-left: 1.6%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 250px;
+    display: inline-block;
+    position: absolute;
+}
+
+.need-georgian {
+    font-family: "BPG Nino Elite Exp Caps", sans-serif!important;
+}
+
+a:hover, a:hover * {
+    text-decoration: none;
+    border-color: #ff5050;
+}
+
+a:hover img {
+    background-color: #ff5050;
+    border-color: transparent;
+}
+
+a:hover .profile-list-one {
+    background-color: white;
+    box-shadow: #040e2d
+}
+
+a:hover .profile-list-name {
+    color: #156cac;
+}
+
+
+
+a:active, a:active * {
+    text-decoration: none;
+    border-color: #144465;
+}
+
+a:active img {
+    background-color: white;
+    border: 3px solid white;
+}
+
+a:active .profile-list-one {
+    background-color: #ff5050;
+}
+
+a:active .profile-list-name {
+    color: white;
+}
+
+
+/*a:hover .profile-list-one {*/
+/*    border-color: #ff5050;*/
+/*}*/
+
+.profile-list-image {
+    border-radius: 50px;
+    background-color: #ff5050;
+    box-shadow: 0 0 3px 2px #ff5050;
+    height: 100px;
+    width: 100px;
+    margin: 5px 10px 0 5px;
+}
+
+/*.boxstyle {*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*    !*margin-left:80px;*!*/
+/*    !*margin-top:60px;*!*/
+/*    margin: 20px;*/
+/*    padding: 10px;*/
+/*    border-radius: 100px;*/
+/*    background-color: #7da2c4;*/
+/*    width: 350px;*/
+/*    height: 370px;*/
+/*    border: 1px solid white;*/
+/*    box-shadow: 3px 10px 20px #0b4a79;*/
+/*}*/
+
+
+/*.infostyle {*/
+/*    font-family: Verdana, sans-serif;*/
+/*    font-size: 17px;*/
+/*    text-align: center;*/
+/*    white-space: nowrap;*/
+/*    overflow: hidden;*/
+/*    left: 10px;*/
+/*    color: white*/
+/*}*/
+
+
+/**/
+/**/
+/**/
+/**/
+
+.auth-center-login {
+    text-align: center;
+    padding: 7% 15% 0 7.5%;
+}
+
+.auth-center-register {
+    text-align: center;
+    padding: 7.15% 15% 0 18%;
+}
+
+.auth-table {
+    list-style-type: none;
+    flex-direction: row;
+    margin: auto;
+}
+
+.input-class, .input-class-short, .input-class-shorter {
+    box-shadow: 1px 2px 6px rgba(2, 12, 47, 0.27);
+    border: none;
+}
+
+.input-class:focus-within, .input-class-short:focus-within, .input-class-shorter:focus-within {
+    box-shadow: inset 1px 2px 6px rgba(2, 12, 47, 0.27)
+}
+
+.input-class, .input-class:focus {
+    height: 50px;
+    width: 160%;
+    outline: 0;
+    border-radius: 10px;
+}
+
+.input-class-short, .input-class-short:focus {
+    width: 75%;
+}
+
+.input-class-shorter, .input-class-shorter:focus {
+    width: 35%;
+}
+
+
+form input[type="text"], form input[type="password"] {
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 15px;
+}
+
+.input-date {
+    width: 75%;
+    height: 45px;
+    border-radius: 10px;
+    box-shadow: 1px 2px 6px rgba(2, 12, 47, 0.27);
+    border: none;
+    outline: 0;
+    padding: 0 4.5% 0 4.5%;
+}
+
+.input-sex li {
+    display: inline-block;
+    flex-direction: row;
+    margin-right: 4px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.input-sex {
+    margin-right: 30px;
+}
+
+.input-sex li {
+    box-shadow: 1px 2px 6px rgba(2, 12, 47, 0.27);
+}
+
+.input-sex li:active {
+    box-shadow: inset 1px 2px 6px rgba(2, 12, 47, 0.27);
+}
+
+
+.input-picture {
+    display: none;
+}
+
+#input-picture, #file {
+    width: 75%;
+    height: 41px;
+    margin-bottom: -2px;
+    background-color: #ff5050;
+    color: #FFFFFF;
+    border-radius: 10px;
+    font-family: "BPG Nino Elite Exp Caps", sans-serif;
+    font-size: 18px;
+    padding: 7px;
+    box-shadow: 1px 2px 6px rgba(2, 12, 47, 0.27);
+}
+
+
+#submit {
+    height: 38px;
+    background-color: #ff5050;
+    color: #FFFFFF;
+    border-radius: 10px;
+    font-family: "BPG Nino Elite Exp Caps", sans-serif;
+    font-size: 24px;
+    border: none;
+    box-shadow: 1px 2px 6px rgba(2, 12, 47, 0.27);
+    outline: none;
+}
+
+#submit:hover, #input-picture:hover {
+    box-shadow: inset -3px -3px 16px rgba(52, 4, 4, 0.22);
+}
+
+#submit:active, #input-picture:active {
+    outline: 0;
+    box-shadow: inset 3px 3px 16px rgba(52, 4, 4, 0.22);
+}
+
+
+.submit-style-login * {
+    width: 160%;
+}
+
+
+.submit-style-register * {
+    width: 75%;
+    outline: 0;
+}
+
+
+.remember-me {
+    margin-right: 10%;
+}
+
+#help-register-age {
+    font-size: 14px;
+    color: #797979;
+    margin-right: 200px;
+}
+
+#help-register-sex {
+    font-size: 14px;
+    color: #797979;
+    margin-right: 300px;
+}
+
+#help-register-picture {
+    font-size: 14px;
+    color: #797979;
+    margin-right: 200px;
+}
+
+.myprofile-profilepicture {
+    height: 200px;
+    width: 200px;
+    float:right;
+    margin-right: 40px;
+    border-radius: 500px;
+    border: solid 7px #ff5050;
+    background-color: #ff5050;
+}
+
+.profile-nav {
+    margin-left: 5px;
+}
+
+#uploaded-user-image[src="#"] {
+    display: none;
+}
+
+#uploaded-user-image {
+    border-radius: 100px;
+    border: 4px solid #ff5050;
+    background-color: #ff5050;
+    margin-left: 200px;
+    position: absolute;
+}
+
+.nav-left-tabs {
+    font-family: "BPG Nino Elite Exp Caps", sans-serif;
+    box-shadow: 2px 2px 9px rgba(2, 12, 47, 0.27);
+    background-color: white!important;
+    font-size: 20px;
+    text-align: center;
+    max-width: 300px;
+    border-radius: 30px;
+}
+
+.nav-left-tabs * {
+    color: purple!important;
+}
+
+.nav-left-tabs .tab-passive:hover {
+    box-shadow: inset 1px 2px 6px rgba(2, 12, 47, 0.27);
+    border-radius: 30px!important;
+}
+
+.nav-left-tabs .active {
+    background-color: #ff5050!important;
+    color: white!important;
+    border-radius: 30px;
+    box-shadow: inset 4px 4px 6px rgba(2, 12, 47, 0.27)!important;
+}
+
+.nav-left-tabs *:hover {
+    box-shadow: inset 1px 2px 6px rgba(2, 12, 47, 0.27)!important;
+    border-radius: 30px;
+}
