@@ -1,9 +1,10 @@
 from flask import render_template, url_for, session, redirect, flash, request
 from forms import SignInForm, RegisterForm, PostForm
-from app import app, UserModel, PostsModel
+from app import app, UserModel, PostsModel, db
 from general_crud import create, update, delete
 from werkzeug.utils import secure_filename
-from datetime import date
+from datetime import datetime, date
+from format_dob import calculate_age, dob_string_to_datetime
 
 
 pages_nav_list = [
@@ -19,42 +20,26 @@ def list_posts():
     user = None
     form_post = PostForm()
     all_posts = PostsModel.query.all()
-    authors = UserModel.query.all()
+    authors = UserModel
 
     try:
         if session['username']:
             user = UserModel.query.filter_by(username=session['username']).first()
-            print('27')
             if request.method == 'POST':
                 if form_post.text.data is None and form_post.media.data is None:
-                    print(30)
                     pass
                 else:
-                    print(33)
                     text = form_post.text.data
-                    print(35)
                     media = form_post.media.data
-                    print(37)
-                    time = '04/14/2021'
-                    print(39)
+                    time = datetime.now()
                     if media:
-                        print(41)
                         media_title = secure_filename(f'{user.username}_{media.filename}')
-                        print(43, media_title)
                         media.save(f'static/post_uploads/{media_title}')
                     else:
                         media_title = None
-                    print(45)
-                    print(media)
-                    print('everything: ', text)
-                    print(media)
-                    print(time)
-                    print(user.id)
                     received_data = (time, text, media_title, user.id)
-                    print(received_data)
                     create(received_data, PostsModel)
-                    print('finish', received_data)
-
+                    return redirect('/timeline')
     except:
         pass
 
@@ -66,11 +51,6 @@ def list_people():
     # viewed shows the number of already viewed people (on previous pages)
     people_list = UserModel.query.all()
     return render_template('people.html', pages=pages_nav_list, people_list=people_list)
-
-# @app.route('/people/<int:viewed>')
-# def list_people(viewed=0):
-#     # viewed shows the number of already viewed people (on previous pages)
-#     return render_template('people.html', pages=pages_nav_list, viewed=viewed)
 
 
 @app.route('/pages')
@@ -114,7 +94,7 @@ def auth():
 
                 if login_password == correct_password:  # Successful log-in
                     show_flash = True
-                    flash('წარმატებით შეხვედით სისტემაში!')
+                    flash('წარმატებით შეხვედით სისტემაში!', 'alert-green')
 
                     # if remember_me was checked make session permanent
                     remember_me = form_sign_in.remember_me.data
@@ -130,12 +110,12 @@ def auth():
                 else:  # Wrong Password
                     form_sign_in.login_password.data = ''
                     show_flash = True
-                    flash('პაროლი არასწორია')
+                    flash('პაროლი არასწორია', 'alert-yellow')
 
             else:  # Wrong Email or Password
                 form_sign_in.login_password.data = ''
                 show_flash = True
-                flash('ამ მეილით ან იუზერნეიმით მომხმარებელი არ მოიძებნა')
+                flash('ამ მეილით ან იუზერნეიმით მომხმარებელი არ მოიძებნა', 'alert-yellow')
 
         # Register Attempt
         elif form_register.validate_on_submit():
@@ -146,7 +126,8 @@ def auth():
             name_last = form_register.name_last.data
             email = form_register.email.data.lower()
             phone = form_register.phone.data
-            age = form_register.age.data
+            dob = dob_string_to_datetime(form_register.dob.data)
+            age = calculate_age(dob)
             sex = form_register.sex.data
             password = form_register.password.data
 
@@ -154,21 +135,22 @@ def auth():
             if UserModel.query.filter_by(username=username).first():
                 success = False
                 show_flash = True
-                flash('იუზერნეიმი დაკავებულია')
+                flash('იუზერნეიმი დაკავებულია', 'alert-yellow')
             elif UserModel.query.filter_by(email=email).first():
                 success = False
                 show_flash = True
-                flash('მეილი დაკავებულია')
+                flash('მეილი დაკავებულია', 'alert-yellow')
 
             if success:
                 # check if picture was uploaded and save it
+                picture_title = None
                 picture = form_register.picture.data
                 if picture:
                     picture_title = secure_filename(f'{username}_{picture.filename}')
                     picture.save(f'static/profile_pictures/{picture_title}')
 
                 # add everything to DB
-                received_data = (username, name_first, name_last, email, phone, age, sex, password, picture_title)
+                received_data = (username, name_first, name_last, email, phone, dob, age, sex, password, picture_title)
                 create(received_data, UserModel)
 
                 # automatically log in
@@ -176,12 +158,12 @@ def auth():
                 session['username'] = username  # used to determine if logged in
                 pages_nav_list[3] = ("profile", session['username'])
                 show_flash = True
-                flash('რეგისტრაცია წარმატებით დასრულდა!')
+                flash('რეგისტრაცია წარმატებით დასრულდა!', 'alert-green')
                 return redirect(url_for('success_register'))
 
         else:  # When data didn't pass WTForms validators
             show_flash = True
-            flash('მონაცემები არასწორადაა შეყვანილი. თავიდან სცადეთ. ')
+            flash('მონაცემები არასწორადაა შეყვანილი. თავიდან სცადეთ.', 'alert-yellow')
 
     return render_template('auth.html', pages=pages_nav_list, form_sign_in=form_sign_in, form_register=form_register, show_flash=show_flash)
 
@@ -194,76 +176,29 @@ def profile(username=None):
     if request.method == 'POST':
         form_register = RegisterForm()
         target_user = UserModel.query.filter_by(username=session['username']).first()
-        # initialize received data
-        username = form_register.username.data
-        name_first = form_register.name_first.data
-        name_last = form_register.name_last.data
-        email = form_register.email.data.lower()
-        phone = form_register.phone.data
-        age = form_register.age.data
-        sex = form_register.sex.data
-        password = form_register.password.data
-        new_data = []
-        count = 0
-        for filled in [username, name_first, name_last, email, phone, age, sex, password]:
-            print('For loop')
-            print(new_data)
-            if filled is None:
-                print('NONE')
-                if count == 0:
-                    print(target_user)
-                    print(filled, target_user.username)
-                    filled = target_user.username
-                    print(filled)
-                    new_data.append(filled)
-                    print(new_data)
-                elif count == 1:
-                    filled = target_user.name_first
-                    new_data.append(filled)
-                elif count == 2:
-                    filled = target_user.name_last
-                    new_data.append(filled)
-                elif count == 3:
-                    filled = target_user.email
-                    new_data.append(filled)
-                elif count == 4:
-                    filled = target_user.phone
-                    new_data.append(filled)
-                elif count == 5:
-                    filled = target_user.age
-                    new_data.append(filled)
-                elif count == 6:
-                    filled = target_user.sex
-                    new_data.append(filled)
-                elif count == 7:
-                    filled = target_user.password
-                    new_data.append(filled)
-                count += 1
-            else:
-                print('FILLED')
-                if count == 0:
-                    new_data.append(filled)
-                elif count == 1:
-                    new_data.append(filled)
-                elif count == 2:
-                    new_data.append(filled)
-                elif count == 3:
-                    new_data.append(filled)
-                elif count == 4:
-                    new_data.append(filled)
-                elif count == 5:
-                    new_data.append(filled)
-                elif count == 6:
-                    new_data.append(filled)
-                elif count == 7:
-                    new_data.append(filled)
-                count += 1
-        print(new_data)
-        delete(UserModel, target_user.id)
-        create(new_data, UserModel)
-        # update(UserModel, username, new_data)
-        flash('მონაცემები განახლდა')
-        redirect('/profile')
+        if form_register.password.data == target_user.password:
+            formatted_date = dob_string_to_datetime(form_register.dob.data)
+            received_data = []
+            for x in set(form_register):
+                if x.name == 'dob':
+                    x.data = formatted_date
+                    setattr(target_user, 'age', calculate_age(x.data))
+
+                if x.data != '' and x.data is not None and x.name in target_user.__table__.c:
+                    if x.name == 'picture':
+                        picture_title = secure_filename(f'{session["username"]}_{x.data.filename}')
+                        x.data.save(f'static/profile_pictures/{picture_title}')
+                        x.data = picture_title
+
+                    # target_user.update(x.name, x.data)
+                    setattr(target_user, x.name, x.data)
+                    db.session.commit()
+            flash('მონაცემები წარმატებით განახლდა', 'alert-green')
+
+        else:
+            flash('პაროლი არასწორია – მონაცემები არ განახლდა', 'alert-red')
+
+        return render_template('my_profile.html', pages=pages_nav_list, show_flash=show_flash, user=target_user, form_register=RegisterForm())
 
     elif username is None:
         try:
