@@ -1,10 +1,10 @@
 {% macro generate_navbar(pages) %}
-    <nav class="c-12 navbar" id="navbar">
+    <nav class="c-12" id="navbar">
         {% for page in pages %}
             {% if request.endpoint.endswith(page[0]) %}
-                <a class="nav-top active" href="{{ url_for(page[0]) }}">{{ page[1] }}</a>
+                <a class="c-3 nav-button active" href="{{ url_for(page[0]) }}">{{ page[1] }}</a>
             {% else %}
-                <a class="nav-top nav-passive" href="{{ url_for(page[0]) }}">{{ page[1] }}</a>
+                <a class="c-3 nav-button nav-passive" href="{{ url_for(page[0]) }}">{{ page[1] }}</a>
             {% endif %}
         {% endfor %}
     </nav>

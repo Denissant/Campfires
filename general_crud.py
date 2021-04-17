@@ -1,5 +1,5 @@
 from app import UserModel, PostsModel, db
-from resources.resources import users, pages_resource
+from resources.resources import users
 
 
 def create(resource, model):
@@ -23,18 +23,14 @@ def read_all(class_name):
 
 def update(class_name, username, new_params):
     # works both with username and title (both users and pages)
-    print('UPDATE')
     try:
         row = class_name.query.filter_by(username=username).first()
         db.session.delete(row)
-        print('DELETED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1')
     except:
         try:
-            ('DEL2')
             row = class_name.query.filter_by(username=username).first()
             db.session.delete(row)
         except:
-            ('ADDDDDD')
             db.session.add(class_name(*new_params))
             db.session.commit()
 

@@ -7,7 +7,7 @@
 
 
 <br><br><br><br><br>
-<div class="row profile-nav">
+<div class="row">
   <div class="col-3">
     <div class="nav flex-column nav-pills nav-left-tabs" id="v-pills-tab" role="tablist" aria-orientation="vertical">
       <a class="nav-link  active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">ჩემი პროფილი</a>
@@ -17,81 +17,76 @@
   <div class="col-9">
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-    <h1 class="display-2">{{ user.name_first }} {{ user.name_last}} {{ show_profile_picture(user, 'myprofile-profilepicture') }}</h1>
+    <h1 class="display-4">{{ user.name_first }} {{ user.name_last}} {{ show_profile_picture(user, 'myprofile-profilepicture') }}</h1>
     <p class="lead">მომხმარებლის სახელი: {{ user.username }} </p>
     <p class="lead">ელფოსტა: {{ user.email }} </p>
     <p class="lead">მობილურის ნომერი: {{ user.phone }} </p>
+    <p class="lead">დაბადების თარიღი: {{ user.dob }}</p>
     <p class="lead">ასაკი: {{ user.age }} </p>
     <p class="lead">სქესი: {{ user.sex }}</p>
     </div>
       <div class="tab-pane fade" id="v-pills-change" role="tabpanel" aria-labelledby="v-pills-change-tab">
           <form class="auth-center-register" method="POST" enctype="multipart/form-data">
-        <table class="auth-table">
+        <table>
                 <td>{{ form_register.hidden_tag() }}</td>
             <tr>
                 <td>{{ form_register.name_first(
-                    class_='input-class input-class-shorter',
+                    class_='auth-input auth-input-shorter',
                     placeholder='სახელი',
                     value='%s' % user.name_first) }} &nbsp;&nbsp;&nbsp;
 
                     {{ form_register.name_last(
-                    class_='input-class input-class-shorter',
+                    class_='auth-input auth-input-shorter',
                     placeholder='გვარი',
                     value='%s' % user.name_last) }}
                 </td>
             </tr>
             <tr>
                 <td>{{ form_register.email(
-                    class_='input-class input-class-short',
+                    class_='auth-input auth-input-short',
                     placeholder='ელექტრონული ფოსტა',
                     value='%s' % user.email) }}
                 </td>
             </tr>
             <tr>
                 <td>{{ form_register.phone(
-                    class_='input-class input-class-short',
+                    class_='auth-input auth-input-short',
                     placeholder='მობილურის ნომერი',
                     value='%s' % user.phone) }}
                 </td>
             </tr>
             <tr>
-                <td> <span id="help-register-age"> {{ form_register.age.label }} </span> <br>
-                    {{ form_register.age(
+                <td> <span id="help-register-age"> {{ form_register.dob.label }} </span> <br>
+                    {{ form_register.dob(
                     class_='input-date', type='date',
                     min="1900-01-01", max="2008-12-31",
-                    value="2000-06-01") }}
+                    value="%s" % user.dob) }}
                 </td>
             </tr>
             <tr>
                 <td> <span id="help-register-sex"> <br> {{ form_register.sex.label }} </span> <br>
                     {{ form_register.sex(
                     class_="input-sex") }}
-                    <img id="uploaded-user-image" src="#" alt="your image" />
+                    <img id="uploaded-profile-picture" src="#" alt="your image" />
                 </td>
             </tr>
             <tr>
-                <td> <label id="input-picture"> პროფილის სურათი*
+                <td> <label class="input-picture input-profile-picture"> პროფილის სურათი
                     {{ form_register.picture(
                     accept="image/*",
-                    class_="input-picture") }}
+                    class_="hidden-picture-form",
+                    onchange="displayUploaded(this, 'profile_picture')") }}
                     </label>
                 </td>
             </tr>
             <tr>
-                <td><span id="help-register-picture"> *არაა აუცილებელი</span> </td>
             </tr>
             <tr>
-                <td> <br> {{ form_register.password(class_='input-class input-class-short',
-                    placeholder='ახალი პაროლი',
+                <td> <br> {{ form_register.password(class_='auth-input auth-input-short',
+                    placeholder='პაროლი ცვლილებების შესანახად',
                     value='%s' % user.password) }}</td>
             </tr>
-            <tr>
-                <td>{{ form_register.conf_pass(class_='input-class input-class-short',
-                    placeholder='გაიმეორეთ პაროლი',
-                    value='%s' % user.conf_pass) }}</td>
-            </tr>
-            <tr>
-                <td> <span class="submit-style-register"> {{ form_register.submit }} </span> </td>
+                <td> <span class="submit-style-register"> {{ form_register.submit_update }} </span> </td>
             </tr>
         </table>
     <br><br><br><br>
@@ -104,12 +99,12 @@
 
 
 {% if show_flash %}
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
 
-        <ul class="alert alert-success alert-dismissible fade show" role="alert" style="position:absolute; top:10px; float:top; width: 100%; height: 45px; text-align: center">
-        {% for message in messages %}
-          <li>{{ message }}</li>
+        <ul class="alert alert-dismissible fade show" role="alert" style="position:absolute; top:10px; float:top; width: 100%; height: 45px; text-align: center">
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
         {% endfor %}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>

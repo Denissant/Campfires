@@ -16,7 +16,7 @@ class SignInForm(FlaskForm):
                                      length(min=6, max=18),
                                  ])
     remember_me = BooleanField('დამიმახსოვრე')
-    submit = SubmitField('შესვლა')
+    submit_login = SubmitField('შესვლა')
 
 
 class RegisterForm(FlaskForm):
@@ -43,7 +43,7 @@ class RegisterForm(FlaskForm):
                         validators=[DataRequired(message="ნომრის შეყვანა აუცილებელია"),
                                     length(min=9, max=20, message="არასწორადაა შეყვანილი")
                                     ])
-    age = StringField('დაბადების თარიღი: ',
+    dob = StringField('დაბადების თარიღი: ',
                       validators=[
                           DataRequired(message="დაბადების თარიღის შეყვანა აუცილებელია")
                       ])
@@ -61,11 +61,12 @@ class RegisterForm(FlaskForm):
                                  length(min=8, max=18, message="პაროლი უნდა შედგებოდეს 8-18 სიმბოლოსგან")
                              ])
     conf_pass = PasswordField('გაიმეორეთ პაროლი')
-    submit = SubmitField('რეგისტრაცია')
+    submit_register = SubmitField('რეგისტრაცია')
+    submit_update = SubmitField('განახლება')
 
 
 class PostForm(FlaskForm):
     text = TextAreaField('პოსტის ტექსტი')
     media = FileField('ასატვირთი სურათი')
-    submit = SubmitField('დაპოსტვა')
+    submit_post = SubmitField('დაპოსტვა')
 

@@ -5,20 +5,20 @@
                 <td>{{ form_sign_in.hidden_tag() }}</td>
             </tr>
             <tr>
-                <td>{{ form_sign_in.identifier(class_='input-class', placeholder='მომხმარებლის სახელი ან ელფოსტა', autofocus='1') }}</td>
+                <td>{{ form_sign_in.identifier(class_='auth-input', placeholder='მომხმარებლის სახელი ან ელფოსტა', autofocus='1') }}</td>
             </tr>
             <tr>
-                <td>{{ form_sign_in.login_password(class_='input-class', placeholder='პაროლი') }}</td>
+                <td>{{ form_sign_in.login_password(class_='auth-input', placeholder='პაროლი') }}</td>
             </tr>
             <tr>
                 <td><span class="remember-me"> {{ form_sign_in.remember_me.label }} {{ form_sign_in.remember_me(class_='remember-me') }}</span></td>
             </tr>
             <tr>
-                <td> <span class="submit-style-login"> {{ form_sign_in.submit }} </span> </td>
+                <td> <span class="submit-style-login"> {{ form_sign_in.submit_login }} </span> </td>
             </tr>
         </table>
     </form>
-    <br><br><br>
+    <br><br><br><br><br>
 {% endmacro %}
 
 
@@ -28,35 +28,35 @@
                 <td>{{ form_register.hidden_tag() }}</td>
             <tr>
                 <td>{{ form_register.username(
-                    class_='input-class input-class-short',
+                    class_='auth-input auth-input-short',
                     placeholder='მომხმარებლის უნიკალური სახელი') }}
                 </td>
             </tr>
             <tr>
                 <td>{{ form_register.name_first(
-                    class_='input-class input-class-shorter',
+                    class_='auth-input auth-input-shorter',
                     placeholder='სახელი') }} &nbsp;&nbsp;&nbsp;
 
                     {{ form_register.name_last(
-                    class_='input-class input-class-shorter',
+                    class_='auth-input auth-input-shorter',
                     placeholder='გვარი') }}
                 </td>
             </tr>
             <tr>
                 <td>{{ form_register.email(
-                    class_='input-class input-class-short',
+                    class_='auth-input auth-input-short',
                     placeholder='ელექტრონული ფოსტა') }}
                 </td>
             </tr>
             <tr>
                 <td>{{ form_register.phone(
-                    class_='input-class input-class-short',
+                    class_='auth-input auth-input-short',
                     placeholder='მობილურის ნომერი') }}
                 </td>
             </tr>
             <tr>
-                <td> <span id="help-register-age"> {{ form_register.age.label }} </span> <br>
-                    {{ form_register.age(
+                <td> <span id="help-register-age"> {{ form_register.dob.label }} </span> <br>
+                    {{ form_register.dob(
                     class_='input-date', type='date',
                     min="1900-01-01", max="2008-12-31",
                     value="2000-06-01") }}
@@ -66,16 +66,16 @@
                 <td> <span id="help-register-sex"> <br> {{ form_register.sex.label }} </span> <br>
                     {{ form_register.sex(
                     class_="input-sex") }}
-                    <img id="uploaded-user-image" src="#" alt="your image" />
+                    <img id="uploaded-profile-picture" src="#" alt="your image" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label id="input-picture"> პროფილის სურათი*
+                    <label class="input-picture input-profile-picture"> პროფილის სურათი*
                     {{ form_register.picture(
                     accept="image/*",
-                    class_="input-picture",
-                    onchange="displayUploaded(this)") }}
+                    class_="hidden-picture-form",
+                    onchange="displayUploaded(this, 'profile_picture')") }}
                     </label>
                 </td>
             </tr>
@@ -83,13 +83,13 @@
                 <td><span id="help-register-picture"> *არაა აუცილებელი</span> </td>
             </tr>
             <tr>
-                <td> <br> {{ form_register.password(class_='input-class input-class-short', placeholder='ახალი პაროლი') }}</td>
+                <td> <br> {{ form_register.password(class_='auth-input auth-input-short', placeholder='ახალი პაროლი') }}</td>
             </tr>
             <tr>
-                <td>{{ form_register.conf_pass(class_='input-class input-class-short', placeholder='გაიმეორეთ პაროლი') }}</td>
+                <td>{{ form_register.conf_pass(class_='auth-input auth-input-short', placeholder='გაიმეორეთ პაროლი') }}</td>
             </tr>
             <tr>
-                <td> <span class="submit-style-register"> {{ form_register.submit }} </span> </td>
+                <td> <span class="submit-style-register" id="profile-submit-update"> {{ form_register.submit_register }} </span> </td>
             </tr>
         </table>
     <br><br><br><br>

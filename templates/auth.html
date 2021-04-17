@@ -2,7 +2,7 @@
 {% block content %}
 {% from 'auth_templates.html' import sign_in, register %}
 
-<ul class="nav nav-tabs" id="myTab" role="tablist">
+<ul class="nav nav-tabs" id="auth-tabs" role="tablist">
     <li class="nav-item" role="presentation">
         <a class="nav-link active" id="login-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">შესვლა</a>
     </li>
@@ -20,12 +20,12 @@
 </div>
 
 {% if show_flash %}
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
 
-        <ul class="alert alert-warning alert-dismissible fade show" role="alert" style="position:absolute; top:170px; float:top; width: 100%; height: 45px; text-align: center">
-        {% for message in messages %}
-          <li>{{ message }}</li>
+        <ul class="alert alert-dismissible fade show" role="alert" style="position:absolute; top:170px; float:top; width: 100%; height: 45px; text-align: center">
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
         {% endfor %}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
